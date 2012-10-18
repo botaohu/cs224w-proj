@@ -1,0 +1,110 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+%\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{CS231A Course Project Proposal}
+
+\author{Martin Raison\\
+Stanford University\\
+{\tt\small mraison@stanford.edu}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\and
+Botao Hu\\
+Stanford University\\
+{\tt\small botaohu@stanford.edu}
+}
+
+\maketitle
+\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+   This document is a project proposal for the CS231A open course project. It details our plans for contributing to current research in real-time object tracking. Possible datasets, algorithms, readings  and evaluation methods are reviewed.
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\noindent\large\textbf{Future Distribution Permission}\\
+\indent The author(s) of this report give permission for this document to be distributed to Stanford-affiliated students taking future courses.
+
+\section{Problem Statement}
+
+Several attempts have recently been made to improve real-time object tracking in a sequence of frames by using a detector in addition to the tracker (Kalal \etal \cite{kalal2012tracking}, Pernici \etal \cite{pernicifacehugger}, Nebehay \etal \cite{nebehay2011evaluation}). The main goals of the detector are to prevent the tracker from drifting away from the object, and recover tracking after an occlusion. Since the only prior knowledge about the object is a bounding box in the initial frame, the detector must be trained online. In order to build such a system, two critical challenges must be addressed:
+\begin{enumerate}
+\item
+finding an efficient feature-extraction algorithm to perform detection on thousands of subwindows in each frame
+\item
+using a powerful learning strategy to update the template used by the detector
+\end{enumerate}
+In addition, the solutions to these two problems are dependent on each other, and as such, they must be designed so as to fit into a single system.
+
+The goal of this project is to investigate new algorithms for 1.\ and 2.\ and try to find improvements in terms of:
+\begin{itemize}
+\item
+robustness of tracking (good performance with a wide range of objects, tolerance to poor video quality such as camera blur, low resolution, low frame rate, etc)
+\item
+efficiency (time and space complexity)
+\end{itemize}
+For demonstration purposes, some additional features could be introduced, such as simultaneous tracking of multiple objects.
+
+\section{Algorithms}
+
+Several feature extraction algorithms can be used for template matching. Feature descriptors such as FREAK (Vandergheynst \etal\cite{vandergheynst2012freak}), BRISK (Leutenegger \etal\cite{leutenegger2011brisk}) and ORB (Rublee \etal\cite{rublee2011orb}) could help speed up the template matching process.
+
+We would like to investigate a deep learning approach for improving the learning step. Zou, W. \cite{zou} should be a good reference for designing our solution.
+
+\section{Data \& Evaluation}
+
+We plan on comparing our implementation with state-of-the-art methods such as the TLD framework \cite{kalal2012tracking} (marketed as Predator) and ALIEN \cite{pernicifacehugger} by using the same publicly available datasets, such as PETS2009\footnote{http://www.cvg.rdg.ac.uk/PETS2009/a.html} or the David Indoor sequence\footnote{http://www.cs.toronto.edu/~dross/ivt/}.
+
+Qualitative results will be provided through real-time tests with video sequences. Metrics such as precision or recall will be used for quantitative comparison purposes.
+
+Apart from the above-mentioned datasets, other video sources (TV programmes, webcams\footnote{http://www.earthcam.com}, etc) can be used for experimenting the system with different kinds of content and video quality.
+
+\section{Readings}
+
+The papers mentioned in the references section of this document will provide context and background for this project.
+
+\section{Acknowledgements}
+
+We would like to express our gratitude to Alexandre Alahi (Post-doc at the Stanford Computer Vision lab), who accepted to mentor our project.
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{egbib}
+}
+
+\section{Appendix}
+
+	\begin{enumerate}[a)]
+	\item This project is shared with the CS229 course for all members of the team.
+	\item Since the two of us are enrolled in both CS231A and CS229, we will both contribute to the computer vision and the machine learning parts of the project
+	\item The portion of the project that is being counted for CS231A is the first of the two challenges highlighted in the Problem Statement section. More specifically, it consists in experimenting binary descriptors such as FREAK, BRISK or ORB to replace feature-extraction algorithms used in state-of-the-art methods.
+	\end{enumerate}
+\end{document}
