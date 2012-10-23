@@ -66,7 +66,7 @@ Paper ID \cvprPaperID \fi
 
 \begin{document}
 %%%%%%%%% TITLE
-\title{De-anonymizing Social Networks via Alignment \\ {\normalsize CS224W Course Project Proposal}}
+\title{{CS224W Course Project Proposal \\} \bf De-anonymizing social networks via network alignment}
 
 \author{Danqi Chen\\
 Stanford University\\
@@ -92,14 +92,61 @@ Stanford University\\
 
 \maketitle
 
-%%%%%%%%% ABSTRACT
-\begin{abstract}
-   This document is a project proposal for the CS224W open course project. It details our plans for studying the de-anonymizing problem on social networks. 
-\end{abstract}
 
-\section{Problem Statement}
 
-\section{Algorithms}
+\subsection{Problem Formulation}
+Formally, the problem of de-anonymizing social networks is to identify the same users between two anonymized social networks.  A social network can be modeled as a directed graph (e.g., Twitter, Flickr) or an undirected graph (e.g., Facebook): Each node in the graph represents a user in the social network and each edge between two nodes characterizes the relationship between the users, such as ``following'' in Twitter or ``friendship'' in Facebook. In addition, anonymized graphs are usually released with at least some attributes in their nodes such as user profile information, user interests, corresponding to a set of attributes for each node in $V$, which may help us making de-anonymization easier.
+
+\section{Literature Review}
+
+\subsection{De-anonymizing Social Networks}
+
+\cite{Narayanan2009} is the first work to perform large-scale de-anonymization of real-world social networks. Specifically, they try to match the users between Titter and Flickr and show that $30.8\%$ of the verifiable members of both social networks could be recognized with $12\%$ error rate. In their paper, they propose a greedy-based de-anonymization algorithm, which consists of two steps - ``seed finding'' and ``propagation''. In the ``seed finding'' step, they identify a small number of ``seed'' nodes which are present in the both networks and map them to each other; Later they use the seed nodes as ``anchors'' to propagate the de-anonymization to more and more nodes. They iteratively try to extend the mapping as follows: pick an arbitrary unmapped node in a graph, and map it to the ``most similar'' node in the other graph, where the similarity score is computed based on some heuristics such as cosine similarity or the number of formed squares.
+
+It is worth noting that \cite{Narayanan2011} won the Kaggle Social Network Challenge by applying the above de-anonymizing algorithm to the contest dataset and real Flickr network, and utilze the connectivity among ``matched users'' in Flickr to perform link predictions. 
+
+Although the proposed algorithm demonstrates the feasibility of successful de-anonymization on large-scale social networks, the algorithm is based on simple greedy approaches, so that the result is far from ``perfect matchings''; Furthermore, it is purely based on the network topology and doesn't incorporate any attribute of nodes, and these public attributes may greatly improve the de-anonymization process.
+
+\subsection{Network Alignment}
+Network alignment is another well-formed problem, which aims to perform matchings or alignments between the vertices of two undirected graphs. This problem has been studied extensively, and has been applied successfully in many domains such as finding common pathways in biological networks(\cite{Singh2007, Singh2008, Liao2009}), ontology matchings between the Library of Congress with the categories from Wikipedia(\cite{Bayati2009}), and multi-lingual ontologies(\cite{Kreitmann2011, Bayati2009a}). In this subsection, we will review the existing algorithms that produce good solutions for the network alignment, analyze the strengths and weakness of these algorithms and finally investigate the possibility to apply the network alignment algorithms on our settings of de-anonymizing social networks.
+ 
+Most existing work formulate the network alignment problem as follows: given two sets of vertices $V_A = \{1, 2, \ldots, n\}, V_B = \{1', 2', \ldots, m'\}$, and $A = (V_A, E_A), B = (V_B, E_B)$ are two undirected graphs with their respective vertex and edge sets. Let $L$ be a bipartite graph between the vertices of $A$ and $B$, formally $L = (V_A \cup V_B, E_L)$ (in many algorithm settings, $L$ is the complete bipartite graph). The goal is to find a matching $M$ between $V_A$ and $V_B$ using only edges from $L$ ($M \subseteq L$), such that the number of overlapped edges is maximized. Here an edge $(i, j) \in E_A$ is \textit{overlapped} iff. $(i', j') \in E_B, (i, i')$ and $(j, j')$ belong to $M$.
+
+\begin{center}
+\includegraphics[scale = 0.4]{fig/matching}
+\end{center}
+
+In a more general setting following \cite{Singh2007}, each edge $e \in E_L$ has a non-negative weight $w_e$, and the goal is to find a matching $M$ maximizing a linear combination of the matching weight and the number of over-lapped edges. Mathematically, it can be formulated as a quadratic program(QP): define $\mathbf{S}$ as a 0-1 matrix of size $|E_L| \times |E_L|$ where $S[ii',  jj'] = 1$ if $(i, j) \in E_A$ and $(i', j') \in E_B$, $\mathbf{A}$ as the binary incidence matrix of $L$ with dimensions $|V_L| \times |E_L|$. We want to find a 0-1 vector $\mathbf{x}$ such that:
+\begin{eqnarray*}
+      \max_{\mathbf{x}} & & {\alpha \mathbf{w}^{\intercal}\mathbf{x} + \beta \mathbf{x}^{\intercal}\mathbf{S}\mathbf{x}} \\
+      \text{ subject to  } & &  \mathbf{A}\mathbf{x} \leq \mathbf{1}, x_{ii'} \in \{0, 1\}
+\end{eqnarray*}
+
+Solving the QP formulation is NP-hard, therefore many existing works have been attempted to relax the constraints or find the heuristics:
+
+\textbf{IsoRank}(\cite{Singh2008}) learns a similarity measure $r_{ii'}$ between node $i$ in $V_A$ and node $i'$ in $V_B$ and $r_{ii'}$ is defined as:
+   \begin{equation*}
+           r_{ii'} = \sum_{(i, j) \in E_A}{\sum_{(i', j') \in E_B}{\frac{R_{j, j'}}{|N_j||N_{j'}|}}}.
+   \end{equation*}
+The new weights $r_{ii'}$ can be found using an eigen-value calculation as in PageRank. Later, \cite{Bayati2009a} proposes an extension of IsoRank algorithm based on the Kronecker product, named \textbf{SpaIsoRank}, which can be adapted to the case when $L$ is sparse. \cite{Kollias2011} proposes a \textbf{Network Similarity Decomposition (NSD)} algorithm, which uses matrix decomposition to approximate the power iteration in IsoRank and runs much faster than the original algorithm.
+
+\cite{Klau2009} formulates a \textbf{linear programming(LP)} relaxation of the original QP, and proposes an iterative approximation algorithm, which is a tigher LP relaxation and Lagrangian decomposition of the symmetry constraints. This algorithm can be used to handle large networks when $L$ is sparse.
+
+\cite{Bayati2009a} proposes two message passing algorithms \textbf{MP} and \textbf{MP++} for network alignment: It constructs a fractor graph and defines a probability distribution on the space of all matchings in $L$ that assigns the highest probability to the matching that maximize the QP, and then applies the stanford Belief Progapation algorithm for finding the optimum solution. As well, MP algorithms can be applied to large sparse networks.
+
+In last year's course project \cite{Kreitmann2011}, Kreitmann proposes a simple \textbf{simulated annealing(SA)} algorithm, which initializes a greedy-based matching first, and adopts simulated algorithm approach taking the number of ``overlapped'' edges as the heuristic function for swapping two matches. 
+
+Although the above algorithms may produce good results in their applications, we still have some concerns:
+\begin{itemize}
+   \item
+      To our knowledge, no network alignment algorithm has been applied to the problem of de-anonymizing social network.
+   \item
+      IsoRank, LP, and MP algorithms can only be applied in small datasets (e.g., biological networks) or large-scale sparse networks. For handling large-scale networks, how to select $L$ should be the issue we need to consider. 
+   \item
+      All the network alignment algorithms are based only on the network structure, no node attribute is incorporated to improve the alignment. 
+   \item
+      All the above algorithms are applying to aligning two undirected networks, we should consider if it is possible to develop network alignment algorithms for two directed network or one undirected network and one directed network, which can be adopted to our social networks. 
+\end{itemize}
 
 \section{Data and Evaluation}
 
