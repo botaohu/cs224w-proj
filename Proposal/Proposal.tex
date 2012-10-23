@@ -94,10 +94,9 @@ Stanford University\\
 
 \section{Introduction}
 
+With the booming and developing of online social media in recent years, a large amount of valuable social network data has been generated. Social network data are mined for a variety of purposes, businesses leverage data to learn about consumers in order to tailor and enhance experiences, government agencies rely on data to assess public opinions and formulate optimal policies, and scientists use data to study complex interpersonal interactions. As a standard way of privacy control, social network data is usually anonymized in order to be shared with third parties and serve research purposes, i.e. names, address and demographical information are removed from the data set. However, anonymity is often misrepresented as sufficient to avoid privacy risks. Actually, with easy access to abundant publicly available auxiliary information, especially the connection structure of the social network , we may still identify individual users and thus de-anonymize social network data.
 
-With the booming and developing of online social media in recent years, a large amount of valuable social network data has been generated. Social network data are mined for a variety of purposes, businesses leverage data to learn about consumers in order to tailor and enhance experiences, government agencies rely on data to assess public opinions and formulate optimal policies, and scientists use data to study complex interpersonal interactions. 
-As a standard way of privacy control, social network data are usually anonymized in order to be shared with third parties, i.e. names, address and demographical information are removed from the data set. However, anonymity is often misrepresented as sufficient to avoid privacy risks. Actually, with easy access to abundant publicly available auxiliary information, especially the social network connection structure, we may still identify individual users and thus de-anonymize social network data.
-Social network de-anonymization is essentially a network alignment task, i.e., aligning an anonymized network to an identified network. However, existing de-anonymization algorithms \cite{Narayanan2009} adopt simple greedy based approach, without referring to the findings in the well studied field of network alignment. In this project, our group aims at performing social network de-anonymization via network alighnment method. In light of our works, we hope to redefine people's understanding of privacy protection, and contribute to the formulation of efficient government policies regarding privacy protection and re-evaluation of business practices surrounding the sharing of social-network data.
+Given that social network is modeled by a graph of relationships between users, the de-anonymization problem is in fact equivalent to network alignment. However, the existing de-anonymization algorithm \cite{Narayanan2009} only adopts simple greedy based approach, without referring to the findings in the well studied field of network alignment. In this project, our group aims at performing social network de-anonymization via network alignment method, i.e., aligning an anonymized network to an identified network. The significance of this approach is twofold: first, we expect to improve the overall performance of de-anonymization task and demonstrate the feasibility of successful re-identiﬁcation based on the network topology and even node attributes; second, based on network alignment approach, we will be able to use one data-set to enrich the other, which is valuable for advertising business and social marketing. Furthermore, in light of our works, we hope to redefine people's understanding of privacy protection, and contribute to the formulation of efficient government policies regarding privacy protection and re-evaluation of business practices surrounding the sharing of social-network data.
 
 
 \section{Literature Review}
@@ -249,7 +248,9 @@ We will submit a report of the empirical comparison of several algorithms on the
 \item
 We will implement most of the codes in SNAP\footnote{http://snap.stanford.edu} framework and integrate some complete componments of network alignment into the SNAP package.  
 \end{itemize}
+{
+\small
 \bibliographystyle{abbrv}
 \bibliography{na}
-
+}
 \end{document}
