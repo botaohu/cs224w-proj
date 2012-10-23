@@ -94,6 +94,9 @@ Stanford University\\
 
 
 
+\section{Introduction}
+
+
 \subsection{Problem Formulation}
 Formally, the problem of de-anonymizing social networks is to identify the same users between two anonymized social networks.  A social network can be modeled as a directed graph (e.g., Twitter, Flickr) or an undirected graph (e.g., Facebook): Each node in the graph represents a user in the social network and each edge between two nodes characterizes the relationship between the users, such as ``following'' in Twitter or ``friendship'' in Facebook. In addition, anonymized graphs are usually released with at least some attributes in their nodes such as user profile information, user interests, corresponding to a set of attributes for each node in $V$, which may help us making de-anonymization easier.
 
@@ -150,6 +153,7 @@ Although the above algorithms may produce good results in their applications, we
 
 \section{Data and Evaluation}
 
+\subsection{Social networking data}
 We will use the data from three large online social networks in our experiments: Twitter, Flickr and Foursquare. On these social networks, the data of user profiles and friendship connections are all public and accessable by crawlers or APIs. 
 
 The first graph is the ``following'' relationships on the Twitter\footnote{http://www.twitter.com}, a microblogging service, which has 500 million users (200 million active). We consider to adopt the data crawled by  Kwak et al. \footnote{http://an.kaist.ac.kr/traces/WWW2010.html} containing 41 million users. In order to increase the overlap to the other two social networks, we will extend this dataset to the latest network as possible. 
@@ -176,7 +180,7 @@ The links of the user profile page of the social networking websites are another
 \centering
 \caption{Links on the user profile page of serveral social networking website}
 \label{fig:infer}
-\includegraphics[width=0.7\textwidth]{infer.eps}
+\includegraphics[width=0.7\textwidth]{fig/infer.eps}
 \end{figure}
 
 
@@ -194,7 +198,7 @@ Scalability: Running time on the large-scale data.
 We will implement codes in SNAP\footnote{http://snap.stanford.edu} framework and integrate the complete componment of network alignment into the SNAP package.  
 
 
-\nocite{Ding2010,Wanga,Peng2012,Klau2009,Wondracek2010,Balduzzi2010,Koutra2011,Bayati2009,Bradde2010,Cromi2009,Flannick2009,Memisevic2012,Kreitmann2011,Narayanan2009,Delcher2002,Kollias2012,Mohammadi,Kuchaiev2007,Wangb,Liao2009,El-Kebir2011,Shi,Bayati2009a,Pache2012,Pache2012a,Kollias2011,Doan,Bayatia,Koyuturk2006,Todor2007,Narayanan2008,Burkhart2010,Backstrom2007}
+\nocite{Ding2010,Wanga,Peng2012,Klau2009,Wondracek2010,Balduzzi2010,Koutra2011,Bayati2009,Bradde2010,Cromi2009,Flannick2009,Memisevic2012,Kreitmann2011,Narayanan2009,Delcher2002,Kollias2012,Mohammadi,Kuchaiev2007,Wangb,Liao2009,El-Kebir2011,Bayati2009a,Pache2012,Pache2012a,Kollias2011,Doan,Bayatia,Koyuturk2006,Todor2007,Narayanan2008,Burkhart2010,Backstrom2007}
 
 
 \bibliographystyle{abbrv}
