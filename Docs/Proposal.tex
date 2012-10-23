@@ -99,34 +99,13 @@ Stanford University\\
 
 \section{Problem Statement}
 
-Several attempts have recently been made to improve real-time object tracking in a sequence of frames by using a detector in addition to the tracker (Kalal  \cite{kalal2012tracking}, Pernici  \cite{pernicifacehugger}, Nebehay  \cite{nebehay2011evaluation}). The main goals of the detector are to prevent the tracker from drifting away from the object, and recover tracking after an occlusion. Since the only prior knowledge about the object is a bounding box in the initial frame, the detector must be trained online. In order to build such a system, two critical challenges must be addressed:
-\begin{enumerate}
-\item
-finding an efficient feature-extraction algorithm to perform detection on thousands of subwindows in each frame
-\item
-using a powerful learning strategy to update the template used by the detector
-\end{enumerate}
-In addition, the solutions to these two problems are dependent on each other, and as such, they must be designed so as to fit into a single system.
-
-The goal of this project is to investigate new algorithms for 1.\ and 2.\ and try to find improvements in terms of:
-\begin{itemize}
-\item
-robustness of tracking (good performance with a wide range of objects, tolerance to poor video quality such as camera blur, low resolution, low frame rate, etc)
-\item
-efficiency (time and space complexity)
-\end{itemize}
-For demonstration purposes, some additional features could be introduced, such as simultaneous tracking of multiple objects.
-
 \section{Algorithms}
 
-Several feature extraction algorithms can be used for template matching. Feature descriptors such as FREAK (Vandergheynst \cite{vandergheynst2012freak}), BRISK (Leutenegger \cite{leutenegger2011brisk}) and ORB (Rublee  \cite{rublee2011orb}) could help speed up the template matching process.
-
-We would like to investigate a deep learning approach for improving the learning step. Zou, W. \cite{zou} should be a good reference for designing our solution.
 
 
 \section{Readings}
 
-The papers mentioned in the references section of this document will provide context and background for this project.
+\cite{Ding2010,Wanga,Peng2012,Klau2009,Wondracek2010,Balduzzi2010,Koutra2011,Bayati2009,Bradde2010,Cromi2009,Flannick2009,Memisevic2012,Kreitmann2011,Narayanan2009,Delcher2002,Kollias2012,Mohammadi,Kuchaiev2007,Wangb,Liao2009,El-Kebir2011,Shi,Bayati2009a,Pache2012,Pache2012a,Kollias2011,Doan,Bayatia,Koyuturk2006,Todor2007,Narayanan2008,Burkhart2010,Backstrom2007}
 
 
 \bibliographystyle{abbrv}
