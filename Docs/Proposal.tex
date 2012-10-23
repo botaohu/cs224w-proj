@@ -66,7 +66,7 @@ Paper ID \cvprPaperID \fi
 
 \begin{document}
 %%%%%%%%% TITLE
-\title{CS224W Course Project Proposal: A survey of Network Alignment}
+\title{De-anonymizing Social Networks via Alignment \\ {\normalsize CS224W Course Project Proposal}}
 
 \author{Danqi Chen\\
 Stanford University\\
@@ -94,7 +94,7 @@ Stanford University\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-   This document is a project proposal for the CS231A open course project. It details our plans for contributing to current research in real-time object tracking. Possible datasets, algorithms, readings  and evaluation methods are reviewed.
+   This document is a project proposal for the CS224W open course project. It details our plans for studying the de-anonymizing problem on social networks. 
 \end{abstract}
 
 \section{Problem Statement}
@@ -105,26 +105,13 @@ Stanford University\\
 
 We will use the data from three large online social networks in our experiments: Twitter, Flickr and Foursquare. On these social networks, the data of user profiles and friendship connections are all public and accessable by crawlers or APIs. 
 
-The first graph is the ``following'' relationships on the Twitter\footnote{http://www.twitter.com}, a microblogging service, which has 500 million users (200 million active). 
+The first graph is the ``following'' relationships on the Twitter\footnote{http://www.twitter.com}, a microblogging service, which has 500 million users (200 million active). We consider to adopt the data crawled by  Kwak et al. \footnote{http://an.kaist.ac.kr/traces/WWW2010.html} containing 41 million users. In order to increase the overlap to the other two social networks, we will extend this dataset to the latest network as possible. 
 
 The second graph is the ``contact'' relationship on Flickr\footnote{http://www.flickr.com}, a photo-sharing service, which has 51 million registered members and 6 billion images on Jan 19, 2012.
 
 The third graph is the ``Friends'' relationships on Foursquare\footnote{http://www.foursquare.com}, a location-based social network, which has 22 million global users on March 2, 2012. 
 
-
-
-Narayanan at el. \ref{Narayanan2008} 
-
-SNS 
-Twitter
-Flickr
-Foursquare
-
-Social structure data
-Profile data
-
-Foursquare 
-
+Narayanan at el. \cite{Narayanan2008} did the experiment on aligning Twitter and Flickr data.
 
 \subsection{Ground truth}
 To verify our de-anonymizing results , we have to determine the ground truth, i.e., the true mapping between the users of the online social networks. Actually, we do not need to label the mapping of all users since the ground truth as a test set can be far smaller than the complete network data.
@@ -150,16 +137,15 @@ Fortunately, on these famous social networking webiste in the figure \ref{fig:in
 
 \subsection{Evaluation}
 
-Since we have a ground truth, correct matches 
+We will compare our algorithm on the real dataset to Network Alignment \cite{Narayanan2008} and Simulated Annealling \cite{Kreitmann2011}. 
 
-We will compare Network Alignment \cite{Narayanan2008} and Simulated Annealling \cite{Kreitmann2011}. 
+Accurary: Given a ground truth, the accurary evaluation can be simply the correct matches between two networks. 
 
-Belief Propagation
+Scalability: Running time on the large-scale data.
 
 \section{Deliverable}
-We hope to creata a final report, which 
+We will implement codes in SNAP\footnote{http://snap.stanford.edu} framework and integrate the complete componment of network alignment into the SNAP package.  
 
-We will implement the most of codes in SNAP\footnote{http://snap.stanford.edu} framework and intregrate the  
 
 \nocite{Ding2010,Wanga,Peng2012,Klau2009,Wondracek2010,Balduzzi2010,Koutra2011,Bayati2009,Bradde2010,Cromi2009,Flannick2009,Memisevic2012,Kreitmann2011,Narayanan2009,Delcher2002,Kollias2012,Mohammadi,Kuchaiev2007,Wangb,Liao2009,El-Kebir2011,Shi,Bayati2009a,Pache2012,Pache2012a,Kollias2011,Doan,Bayatia,Koyuturk2006,Todor2007,Narayanan2008,Burkhart2010,Backstrom2007}
 
